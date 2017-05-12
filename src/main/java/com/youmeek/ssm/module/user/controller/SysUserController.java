@@ -1,5 +1,6 @@
 package com.youmeek.ssm.module.user.controller;
 
+import com.hankcs.hanlp.HanLP;
 import com.youmeek.ssm.module.user.pojo.SysUser;
 import com.youmeek.ssm.module.user.service.SysUserService;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ public class SysUserController {
 	@RequestMapping("/showUserToJspById/{userId}")
 	public String showUser(Model model,@PathVariable("userId") Long userId){
 		SysUser user = this.sysUserService.getById(userId);
+		user.setSysUserRealName(HanLP.convertToTraditionalChinese(user.getSysUserRealName()));
 		model.addAttribute("user", user);
 		return "showUser";
 	}
