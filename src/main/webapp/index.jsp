@@ -18,40 +18,57 @@
 
 <body>
     <div class="container">
-    <div class="header clearfix">
-        <h1 class="text-muted">简繁体转换工具</h1>
-    </div>
+        <div class="header clearfix"><h1 class="text-muted">简繁体转换工具</h1></div>
 
-    <div class="text-write">
-        <div class="text-content">
-            <div style="width: 100%;">
-                <button class="close" data-dismiss="alert" aria-label="清除文字" aria-hidden="false">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <div class="text-write">
+            <div class="text-content">
+                <div style="width: 100%;">
+                    <button class="close" data-dismiss="alert" aria-label="清除文字" aria-hidden="false">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
 
-                <textarea class="form-control" rows="16" spellcheck="false" placeholder="请输入文本"></textarea>
+                    <textarea id="txt" class="form-control" rows="16" spellcheck="false" placeholder="请输入文本"></textarea>
+                </div>
+            </div>
+
+            <div class="text-actions">
+                <button type="button" class="btn btn-success" disabled>转换成简体字</button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary">转换成正体繁体 </button>
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">转换成正体繁体</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">转换成台湾繁体</a></li>
+                        <li><a href="#">转换成香港繁体</a></li>
+                    </ul>
+                </div>
+                <button type="button" class="btn btn-default pull-right">复制</button>
             </div>
         </div>
-
-        <div class="text-actions">
-            <button type="button" class="btn btn-success" disabled>转换成简体字</button>
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary">转换成正体繁体 </button>
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">转换成正体繁体</span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">转换成台湾繁体</a></li>
-                    <li><a href="#">转换成香港繁体</a></li>
-                </ul>
-            </div>
-            <button type="button" class="btn btn-default pull-right">复制</button>
-        </div>
     </div>
-</div>
+
     <script src="${webRoot}/js/jQuery-core/jquery.min.js"></script>
+    <script src="${webRoot}/js/jQuery-core/jquery.zclip.min.js"></script>
     <script src="${webRoot}/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (window.clipboardData ) {
+                $('.btn-default').click(function() {
+                    window.clipboardData.setData("Text", $("#txt").val());
+                    alert('复制成功！');
+                });
+            } else {
+                $(".btn-default").zclip({
+                    path:'http://img3.job1001.com/js/ZeroClipboard/ZeroClipboard.swf',
+                    copy:function(){return $("#txt").val();},
+                    afterCopy:function(){alert('复制成功！');}
+                });
+            }
+        });
+
+    </script>
 </body>
 </html>
